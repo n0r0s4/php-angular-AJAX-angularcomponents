@@ -1,0 +1,53 @@
+<div>
+	<table class="table table-bordered" ng-disabled="modReviewsForm.$invalid">
+		<tr><th>Author</th><th>Rate (0-5)</th><th>Reviews per page</th></tr>
+		<tr>
+			<td>
+				<select id="userSearch" ng-model="userSearch">
+					<option value="">None</option>
+					<option ng-repeat="user in usersArray" value="{{user.getId()}}">{{user.getName()+' '+user.getSurname1()}}</option>
+				</select>
+			</td>
+			<td>
+				<input type="text" ng-model="rateSearch"/>
+			</td>
+			<td>
+				<input type="number" min="1" max="100" class="form-control" ng-model="pageSize"/>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<form name="modReviewsForm" ng-submit="modReviewsForm.$valid && modReviews()" novalidate>
+	<h1>Reviews found:</h1>
+	<table class="table table-bordered">
+		<tr><th>Author</th><th>Description</th><th>Rate (0-5)</th><th>Date</th><th>Remove</th></tr>
+		<tr dir-paginate="review in filteredData | itemsPerPage: pageSize" current-page="currentPage">
+			<td>
+				<select id="user{{$index}}" ng-model="review.idUser" required>
+					<option ng-repeat="user in usersArray" value="{{user.getId()}}">{{user.getName()+' '+user.getSurname1()}}</option>
+				</select>
+			</td>
+			<td>
+				<input type="text" id="name{{$index}}" ng-model="review.description" required />
+			</td>
+			<td>
+				<input type="text" id="rate{{$index}}" ng-model="review.rate" required ng-pattern='/[0-5]/' />
+			</td>
+			<td>
+				<input type="text" id="inSale{{$index}}" ng-model="review.dateReview" required ng-pattern='/^((\d{4})-(\d{2})-(\d{2})|(\d{2})\/(\d{2})\/(\d{4}))$/' />
+			</td>
+			<td>
+				<a ng-click="removeReview($index)" class="btn btn-danger">Remove</a>
+			</td>
+		</tr>
+	</table>
+	<div ng-show="modReviewsForm.$valid">
+		<div class="text-left" boundary-links="true">
+			<dir-pagination-controls boundary-links="true" template-url="view/templates/dir-pagination-controls.html"></dir-pagination-controls>
+		</div>
+	</div>
+	<button type="submit" class="btn btn-success" ng-disabled="modReviewsForm.$invalid" >
+		Modify Reviews
+	</button>
+</form>

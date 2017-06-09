@@ -1,0 +1,85 @@
+<form class="login2" name="userManagement" ng-submit="applyManagement()" novalidate>
+  <div class="container well">
+    <div class="form-horizontal" >
+      <!--
+      <div>passwordValid:{{passwordValid}} userManagement.$invalid: {{userManagement.$invalid}}</div>
+    -->
+    <div class="row" ng-show="userOption == 1">
+      <div class="col-xs-12"><h2>Apply for a new job!</h2></div>
+    </div>
+    <br/>
+      <label class="col-sm-2 control-label" for="formGroup">Position*:</label>
+      <div class="col-sm-4">
+      <select id="applyVacant" ng-model="apply.idVacant">
+        <option ng-repeat="vacant in vacantsArray" value="{{vacant.getId()}}">{{vacant.getName()}}</option>
+      </select>
+    </div>
+      <label class="col-sm-2 control-label" for="formGroup">Portfolio:</label>
+      <div class="col-sm-4">
+        <input class="form-control" name="portfolio" type="text" ng-model="apply.portfolio" ng-pattern='/^(http(s?):\/\/)?(www\.)+[a-zA-Z0-9\.\-\_]+(\.[a-zA-Z]{2,3})+(\/[a-zA-Z0-9\_\-\s\.\/\?\%\#\&\=]*)?$/'>
+        <div ng-show="userManagement.portfolio.$error.pattern" class="has-error">
+								<span class="help-block ">Please, insert a valid web (www.yourweb.dom).</span>
+				</div>
+      </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="formGroup">Hobbies:</label>
+      <div class="col-sm-4">
+        <div ng-repeat="hobby in hobbies">
+          <input type="checkbox" id="hobby{{$index}}" ng-click="hobbyMng($index)"/>
+          <label for="hobby{{$index}}">{{hobby}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="formGroup">Relocate*:</label>
+      <div class="col-sm-4">
+        <input type="radio" name="relocate"  ng-model="apply.relocate" value="YES" checked > YES
+         <input type="radio" name="relocate"  ng-model="apply.relocate" value="NO"> NO
+      </div>
+    </div>
+      <label class="col-sm-2 control-label" for="formGroup">Salary(>9999€)*:</label>
+      <div class="col-sm-4">
+        <input class="form-control" name="salary" type="text" ng-pattern='/[1-9]\d{4}/' ng-currency ng-model="apply.salary" required/>
+        <div ng-show="userManagement.salary.$error.pattern" class="has-error">
+								<span class="help-block ">Please, insert a valid salary.</span>
+				</div>
+				<div ng-show="userManagement.salary.$error.required" class="advice">
+						<span class="help-block ">Salary is required.</span>
+				</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="formGroup">Start date*:</label>
+      <div class="col-sm-6">
+					<p class="input-group">
+						<input type="text" class="form-control" id="birthDate"
+						uib-datepicker-popup="{{format}}"
+						is-open="birthDate.opened"
+						datepicker-options="dateOptions"
+						alt-input-formats="altInputFormats"
+						close-text="Close"
+						ng-required="true"
+						ng-model="apply.startDate"
+						readonly/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="openBirthDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+    </div>
+    <br />
+    <br />
+    <div class="form-group">
+     <label for="comment">About you*:</label>
+     <textarea class="form-control" rows="5" id="comment" ng-model="apply.about" required></textarea>
+   </div>
+      <label class="col-sm-2 control-label" for="formGroup"></label>
+      <div class="col-sm-4">
+        <button ng-disabled="userManagement.$invalid || userManagement.$error.required" class="btn btn-success">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>

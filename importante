@@ -1,0 +1,5 @@
+** desarrollado con xampp en windows 10
+** xampp no permite usuarios de bdd, así que el usuario es root (el password será el tuyo de root, ahora está puesto toor)
+** accesos: user1:123456 -> admin to manage reviews
+            user2:123456 -> user to apply
+	    user3:123456 -> user to apply
